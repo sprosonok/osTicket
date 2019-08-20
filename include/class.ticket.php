@@ -1561,8 +1561,8 @@ implements RestrictedAccess, Threadable, Searchable {
                 $this->isanswered = 1;
             }
             $this->staff_id = 1;
-            //$this->last_message->type = 'R';
-            //$this->last_message->save();
+            $this->last_message->type = 'R';
+            $this->last_message->save();
             $this->save();
         }
 

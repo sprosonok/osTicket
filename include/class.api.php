@@ -173,6 +173,7 @@ class ApiController {
         # Validate the API key -- required to be sent via the X-API-Key
         # header
 //        print_r($_SERVER['REMOTE_ADDR']);
+
         if(!($key=$this->getApiKey()))
             return $this->exerr(401, __('Valid API key required'));
         elseif (!$key->isActive() || $key->getIPAddr()!=$_SERVER['REMOTE_ADDR'])
