@@ -402,6 +402,8 @@ class Mailer {
         if (defined('MAIL_EOL') && is_string(MAIL_EOL))
             $eol = MAIL_EOL;
         $mime = new Mail_mime($eol);
+        $mime->addBcc('"PVS backup" <backup@pvs-studio.com>');
+
         // Add recipients
         if (!is_array($recipients) && (!$recipients instanceof MailingList))
             $recipients =  array($recipients);
@@ -547,7 +549,7 @@ class Mailer {
         //encode the headers.
         $headers = $mime->headers($headers, true);
         $to = implode(',', array_filter(array($headers['To'], $headers['Cc'],
-                    $headers['Bcc'], 'backup@pvs-studio.com')));
+                    $headers['Bcc'])));
         // Cache smtp connections made during this request
         static $smtp_connections = array();
         if(($smtp=$this->getSMTPInfo())) { //Send via SMTP
