@@ -858,7 +858,7 @@ class Format {
         # Handle 'charset' hint in $extra, such as
         # data:text/plain;charset=iso-8859-1,Blah
         # Convert to utf-8 since it's the encoding scheme for the database.
-        $charset = ($always_convert) ? 'iso-8859-1' : false;
+        $charset = ($always_convert) ? 'utf-8' : false;
         foreach ($parameters as $p) {
             list($param, $value) = explode('=', $extra);
             if ($param == 'charset')

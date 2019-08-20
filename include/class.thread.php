@@ -2667,6 +2667,7 @@ class HtmlThreadEntryBody extends ThreadEntryBody {
     function __construct($body, $options=array()) {
         if (!isset($options['strip-embedded']) || $options['strip-embedded'])
             $body = $this->extractEmbeddedHtmlImages($body);
+
         parent::__construct($body, 'html', $options);
     }
 

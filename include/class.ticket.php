@@ -1555,6 +1555,21 @@ implements RestrictedAccess, Threadable, Searchable {
             }
 
         }
+
+        if($this->source == 'API'){
+            if($this->getSubject() != "Feedback"){
+                $this->isanswered = 1;
+            }
+            $this->staff_id = 1;
+            //$this->last_message->type = 'R';
+            //$this->last_message->save();
+            $this->save();
+        }
+
+        if($this->staff_id == 0){
+            $this->staff_id = 1;
+            $this->save();
+        }
         return true;
     }
 
