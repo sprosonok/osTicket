@@ -235,7 +235,7 @@ var scp_prep = function() {
                     if(canned.response) {
                         if (redactor) {
                             redactor.selection.restore();
-                            redactor.insert.html(canned.response);
+                            redactor.insert.html(canned.response, false);
                         } else
                             box.val(box.val() + canned.response);
 

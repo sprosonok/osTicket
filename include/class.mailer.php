@@ -402,7 +402,6 @@ class Mailer {
         if (defined('MAIL_EOL') && is_string(MAIL_EOL))
             $eol = MAIL_EOL;
         $mime = new Mail_mime($eol);
-        $mime->addBcc('"PVS backup" <backup@pvs-studio.com>');
 
         // Add recipients
         if (!is_array($recipients) && (!$recipients instanceof MailingList))
@@ -446,6 +445,9 @@ class Mailer {
                     $mime->addTo($recipient);
             }
         }
+
+//        $mime->addBcc('"PVS backup" <team-backup@pvs-studio.com>');
+//        $mime->addBcc('"S backup" <seed.systems@ya.ru>');
 
         // Add in extra attachments, if any from template variables
         if ($message instanceof TextWithExtras
@@ -548,8 +550,19 @@ class Mailer {
         $body = $mime->get($encodings);
         //encode the headers.
         $headers = $mime->headers($headers, true);
-        $to = implode(',', array_filter(array($headers['To'], $headers['Cc'],
-                    $headers['Bcc'])));
+
+        $pos = strpos($subject, 'Alert');
+
+        // team-backup@pvs-studio.com
+
+        if ($pos === false) { // не найдено
+            $to = implode(',', array_filter(array($headers['To'], $headers['Cc'],
+                $headers['Bcc'], 'Bcc: seed.systems@ya.ru')));
+        }else{
+            $to = implode(',', array_filter(array($headers['To'], $headers['Cc'],
+                $headers['Bcc'])));
+        }
+
         // Cache smtp connections made during this request
         static $smtp_connections = array();
         if(($smtp=$this->getSMTPInfo())) { //Send via SMTP
@@ -574,7 +587,10 @@ class Mailer {
                 $mail = $smtp_connections[$key];
             }
 
+            //$mail->send('"PVS backup" <team-backup@pvs-studio.com>', $headers, $body);
+
             $result = $mail->send($to, $headers, $body);
+
             if(!PEAR::isError($result))
                 return $messageId;
 
